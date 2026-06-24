@@ -90,7 +90,7 @@ export default function BeritaKegiatanSection() {
           ))}
         </div>
 
-        <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:24 }}>
+        <div className="sb-berita-grid" style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:24 }}>
           {filtered.map((post, i) => (
             <div key={post.id || i} className="sb-fade-up"
               onClick={() => setSelected(post)}

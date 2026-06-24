@@ -132,18 +132,21 @@ const GLOBAL_CSS = `
     .sb-nav-links { display:none!important; }
     .sb-hamburger { display:flex!important; }
     .sb-hero-content { padding:100px 24px 64px!important; }
-    .sb-container { padding:0 24px!important; }
-    .sb-org-row { flex-direction:column!important; align-items:center!important; }
-    .sb-org-child { max-width:100%!important; }
-    .org-container { width:900px!important; }
-    .org-card { width:200px!important; }
+    .sb-container { padding:0 20px!important; }
+    section { padding:60px 0!important; }
+    .sb-berita-grid { grid-template-columns:1fr!important; }
+    .sb-dokumen-grid { grid-template-columns:1fr!important; }
+    .org-container { width:700px!important; }
+    .org-card { width:180px!important; }
     .org-card:hover { transform:translateY(-4px) scale(1.01)!important; }
-    .org-header { padding:10px 12px!important; min-height:44px!important; font-size:8px!important; }
-    .org-body { padding:14px 12px!important; gap:6px!important; }
-    .org-avatar { width:44px!important; height:44px!important; font-size:18px!important; border-radius:12px!important; }
+    .org-header { padding:8px 10px!important; min-height:38px!important; }
+    .org-header div { font-size:7px!important; }
+    .org-body { padding:12px 10px!important; gap:4px!important; }
+    .org-avatar { width:36px!important; height:36px!important; font-size:14px!important; border-radius:10px!important; }
+    .org-body div:has(+div) { font-size:11px!important; }
   }
   @media (max-width:1024px) {
-    .sb-container { padding:0 40px!important; }
+    .sb-container { padding:0 32px!important; }
     .sb-footer-grid { grid-template-columns:1fr 1fr!important; }
     .sb-koleksi-grid { grid-template-columns:repeat(2,1fr)!important; }
   }
@@ -724,7 +727,7 @@ function DokumenPublikSection() {
         <p style={{ fontSize:17, color:T.ink2, lineHeight:1.85, fontWeight:300, maxWidth:640, marginBottom:52 }}>
           Dokumen dan informasi publik yang dapat diakses oleh masyarakat sesuai dengan Undang-Undang Keterbukaan Informasi Publik.
         </p>
-        <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:20 }}>
+        <div className="sb-dokumen-grid" style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:20 }}>
           {DOKUMEN.map((d, i) => (
             <div key={i} className="sb-dokumen-card sb-fade-up" style={{ background:T.white, borderRadius:4, padding:"28px 24px", border:"1px solid rgba(0,0,0,.06)", display:"flex", gap:16, alignItems:"flex-start" }}>
               <div style={{ width:44, height:44, background:T.cream2, borderRadius:4, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>{d.icon}</div>
