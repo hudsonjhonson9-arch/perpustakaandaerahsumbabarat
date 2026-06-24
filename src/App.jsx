@@ -608,7 +608,7 @@ const ORG = {
   bidang:[
     { title:"KEPALA BIDANG PENGOLAHAN\nLAYANAN PELESTARIAN\nBAHAN PERPUSTAKAAN", name:"Dominggus Bora, SE", nip:"19710630 200903 1 001", gol:"IV-a" },
     { title:"KEPALA BIDANG PENGELOLAAN\nKEARSIPAN", name:"Afliana Bela Wawo, S.Sos", nip:"19750803 200112 2 003", gol:"IV-a" },
-    { title:"KEPALA BIDANG PENGEMBANGAN\nPERPUSTAKAAN & PEMBUDAYAAN\nGEMAR MEMBACA", name:"CICILIA FARYDA PAUBUN, SP", nip:"---", gol:"---" },
+    { title:"KEPALA BIDANG PENGEMBANGAN\nPERPUSTAKAAN & PEMBUDAYAAN\nGEMAR MEMBACA", name:"Cicilia Faryda Paubun, SP", nip:"19810208 200604 2 033", gol:"IV-a" },
   ],
 };
 
@@ -678,7 +678,7 @@ function StrukturOrganisasiSection() {
             </div>
 
             {/* BIDANG ROW */}
-            <div className="org-line-v" style={{ background:"#cbd5e1", height:80 }} />
+            <div className="org-line-v" style={{ background:"#cbd5e1", height:120 }} />
             <div style={{ width:860, position:"relative" }}>
               <div style={{ position:"absolute", top:0, left:190, right:190, height:3, background:"#cbd5e1" }} />
               {[190, 430, 670].map(pos => (
