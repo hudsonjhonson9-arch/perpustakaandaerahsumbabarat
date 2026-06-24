@@ -101,13 +101,17 @@ const GLOBAL_CSS = `
   .sb-struktur-card { transition: transform .3s ease, box-shadow .3s ease; }
   .sb-struktur-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,.08)!important; }
   .sb-connector-v { width:2px; height:28px; margin:0 auto; background:linear-gradient(to bottom,#D4A543,rgba(212,165,67,.3)); }
-  .sb-connector-h { height:2px; min-width:20px; background:linear-gradient(to right,rgba(212,165,67,.3),#D4A543,rgba(212,165,67,.3)); flex:1; }
-  .sb-connector-v-down { width:2px; height:24px; margin:0 auto; background:linear-gradient(to bottom,rgba(212,165,67,.3),transparent); }
-  .sb-nip { font-size:11px; color:rgba(255,255,255,.45); font-family:'Space Mono',monospace; letter-spacing:.02em; }
-  .sb-nip-dark { font-size:10px; color:#6B6B6B; font-family:'Space Mono',monospace; letter-spacing:.02em; }
-
   .sb-dokumen-card { transition: background .2s, border-color .2s; cursor:pointer; }
   .sb-dokumen-card:hover { background:#F5F5F0!important; border-color:#D4A543!important; }
+  .org-scroll { width:100%; overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch; padding-top:20px; padding-bottom:60px; }
+  .org-container { width:1000px; flex-shrink:0; margin:0 auto; position:relative; display:flex; flex-direction:column; align-items:center; }
+  .org-card { background:#fff; border-radius:20px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,.03); border:1px solid #e2e8f0; cursor:pointer; transition:all .4s cubic-bezier(.175,.885,.32,1.275); }
+  .org-card:hover { transform:translateY(-8px) scale(1.02); box-shadow:0 20px 40px rgba(13,40,24,.1); z-index:10; }
+  .org-header { padding:14px 16px; text-align:center; min-height:52px; display:flex; flex-direction:column; justify-content:center; align-items:center; }
+  .org-body { padding:20px 16px; display:flex; flex-direction:column; align-items:center; text-align:center; gap:10px; }
+  .org-avatar { width:60px; height:60px; border-radius:16px; display:flex; align-items:center; justify-content:center; font-size:24px; transition:all .4s ease; }
+  .org-card:hover .org-avatar { transform:rotate(5deg); }
+  .org-line-v { width:2px; height:50px; margin:0 auto; }
 
   @media (prefers-reduced-motion:reduce) {
     .sb-fade-up { opacity:1; transform:none; transition:none; }
@@ -597,128 +601,94 @@ function KoleksiSection() {
 }
 
 // ─── STRUKTUR ORGANISASI ─────────────────────────────────────────────────────
-const STRUKTUR = {
-  title:"KEPALA DINAS PERPUSTAKAAN & KEARSIPAN",
-  name:"Herybertus Ndama Nggilik, ST, M.AP",
-  nip:"19780424 200604 1 012",
-  gol:"IV-c",
-  children:[
-    {
-      title:"SEKRETARIS DINAS",
-      name:"Samuel L. Manupele, S.Sos",
-      nip:"19721110 200112 1 006",
-      gol:"IV-b",
-      children:[
-        {
-          title:"KEPALA SUB BAGIAN TATA USAHA",
-          name:"Agustina M. Nola, SE",
-          nip:"19760826 200804 2 001",
-          gol:"III-d",
-        },
-      ],
-    },
-    {
-      title:"KEPALA BIDANG PENGOLAHAN\nLAYANAN PELESTARIAN\nBAHAN PERPUSTAKAAN",
-      name:"Dominggus Bora, SE",
-      nip:"19710630 200903 1 001",
-      gol:"IV-a",
-      children:[],
-    },
-    {
-      title:"KEPALA BIDANG\nPENGELOLAAN KEARSIPAN",
-      name:"Afliana Bela Wawo, S.Sos",
-      nip:"19750803 200112 2 003",
-      gol:"IV-a",
-      children:[],
-    },
-    {
-      title:"KEPALA BIDANG PENGEMBANGAN\nPERPUSTAKAAN & PEMBUDAYAAN\nGEMAR MEMBACA",
-      name:"CICILIA FARYDA PAUBUN, SP",
-      nip:"---",
-      gol:"---",
-      children:[],
-    },
+const ORG = {
+  kepala:{ title:"KEPALA DINAS", name:"Herybertus Ndama Nggilik, ST, M.AP", nip:"19780424 200604 1 012", gol:"IV-c" },
+  sekretaris:{ title:"SEKRETARIS DINAS", name:"Samuel L. Manupele, S.Sos", nip:"19721110 200112 1 006", gol:"IV-b" },
+  kasubag:{ title:"KEPALA SUB BAGIAN TATA USAHA", name:"Agustina M. Nola, SE", nip:"19760826 200804 2 001", gol:"III-d" },
+  bidang:[
+    { title:"KEPALA BIDANG PENGOLAHAN\nLAYANAN PELESTARIAN\nBAHAN PERPUSTAKAAN", name:"Dominggus Bora, SE", nip:"19710630 200903 1 001", gol:"IV-a" },
+    { title:"KEPALA BIDANG PENGELOLAAN\nKEARSIPAN", name:"Afliana Bela Wawo, S.Sos", nip:"19750803 200112 2 003", gol:"IV-a" },
+    { title:"KEPALA BIDANG PENGEMBANGAN\nPERPUSTAKAAN & PEMBUDAYAAN\nGEMAR MEMBACA", name:"CICILIA FARYDA PAUBUN, SP", nip:"---", gol:"---" },
   ],
 };
 
-function OrgCard({ node, level, highlight }) {
-  const isTop = level === 0;
-  const isMid = level === 1;
-  const isEmpty = node.title === "---";
+function OrgCard({ data, color, isLeader }) {
+  const [hovered, setHovered] = useState(false);
   return (
-    <div className="sb-struktur-card" style={{
-      background: isTop ? T.greenDeep : T.white,
-      borderRadius:4, padding: isTop ? "28px 40px" : "20px 20px",
-      textAlign:"center", minWidth: isTop ? 420 : 240,
-      border: isTop ? `2px solid ${T.gold}` : `1px solid ${highlight ? T.gold : "rgba(0,0,0,.06)"}`,
-      borderTop: isMid ? `3px solid ${T.gold}` : undefined,
-      boxShadow: isTop ? "0 8px 32px rgba(0,0,0,.12)" : "0 2px 8px rgba(0,0,0,.04)",
-    }}>
-      {!isEmpty && (
-        <div style={{ fontFamily:"'Space Mono',monospace", fontSize:9, letterSpacing:"0.15em", color: isTop ? T.gold : T.greenMid, textTransform:"uppercase", marginBottom:6, whiteSpace:"pre-line" }}>
-          {node.title}
-        </div>
-      )}
-      <div style={{ fontFamily:"'Playfair Display',serif", fontSize: isTop ? 18 : 14, fontWeight:700, color: isTop ? T.white : T.greenDeep, lineHeight:1.3 }}>
-        {isEmpty ? node.name : node.name}
+    <div className="org-card" style={{ width: isLeader ? 240 : 220 }}
+      onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
+      <div className="org-header" style={{ background: color, color:"white" }}>
+        <div style={{ fontSize:9, fontWeight:900, letterSpacing:"0.1em", opacity:.8, textTransform:"uppercase", lineHeight:1.4, whiteSpace:"pre-line" }}>{data.title}</div>
+        {hovered && <div style={{ position:"absolute", bottom:0, left:"50%", transform:"translateX(-50%)", width:40, height:3, background:"rgba(255,255,255,.5)", borderRadius:"2px 2px 0 0" }} />}
       </div>
-      {!isEmpty && (
-        <>
-          <div className={isTop ? "sb-nip" : "sb-nip-dark"} style={{ marginTop:6 }}>
-            NIP. {node.nip}
+      <div className="org-body">
+        <div style={{ position:"relative" }}>
+          <div className="org-avatar" style={{ background: hovered ? `${color}15` : "#f8fafc", border:`2px solid ${hovered ? color : "#f1f5f9"}` }}>
+            👤
           </div>
-          <div style={{ display:"inline-block", marginTop:6, padding:"2px 10px", background: isTop ? "rgba(212,165,67,.2)" : T.cream2, borderRadius:2, fontSize:10, fontWeight:600, letterSpacing:"0.05em", color: isTop ? T.goldLight : T.greenMid }}>
-            {node.gol}
-          </div>
-        </>
-      )}
-    </div>
-  );
-}
-
-function OrgBranch({ node, level }) {
-  const hasChildren = node.children && node.children.length > 0;
-  return (
-    <div style={{ display:"flex", flexDirection:"column", alignItems:"center" }}>
-      <OrgCard node={node} level={level} />
-      {hasChildren && (
-        <>
-          <div className="sb-connector-v" />
-          <div style={{ display:"flex", alignItems:"center", width:"100%", justifyContent:"center" }}>
-            {node.children.map((_, i) => (
-              <div key={i} style={{ flex:1, display:"flex", justifyContent:"center" }}>
-                {i > 0 && <div className="sb-connector-h" />}
-              </div>
-            ))}
-          </div>
-          <div style={{ display:"flex", gap:24, justifyContent:"center", width:"100%", marginTop:0 }}>
-            {node.children.map((child, i) => (
-              <div key={i} style={{ flex:1, maxWidth:300, display:"flex", flexDirection:"column", alignItems:"center" }}>
-                <div style={{ display:"flex", alignItems:"center", width:"100%", justifyContent:"center" }}>
-                  <div className="sb-connector-v" style={{ height:12, background:"linear-gradient(to bottom,rgba(212,165,67,.3),#D4A543)" }} />
-                </div>
-                <OrgBranch node={child} level={level + 1} highlight={level === 0} />
-              </div>
-            ))}
-          </div>
-        </>
-      )}
+          {isLeader && <div style={{ position:"absolute", top:-5, right:-5, background:T.gold, color:"white", width:24, height:24, borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", fontSize:12, border:"2px solid white" }}>⭐</div>}
+        </div>
+        <div>
+          <div style={{ fontSize:13, fontWeight:800, color:T.greenDeep, lineHeight:1.3, marginBottom:4 }}>{data.name}</div>
+          <div style={{ fontSize:10, color:T.ink3, fontWeight:600 }}>NIP. {data.nip}</div>
+          <div style={{ marginTop:4, padding:"2px 8px", background:T.cream2, borderRadius:4, display:"inline-block", fontSize:10, fontWeight:700, color:T.greenMid }}>{data.gol}</div>
+        </div>
+      </div>
     </div>
   );
 }
 
 function StrukturOrganisasiSection() {
-  const ref = useFadeUp();
   return (
-    <section id="struktur" style={{ background:T.cream, padding:"100px 0", overflow:"hidden" }} ref={ref}>
+    <section id="struktur" style={{ background:T.cream, padding:"100px 0", overflow:"hidden" }}>
       <div className="sb-container" style={{ maxWidth:1280, margin:"0 auto", padding:"0 80px" }}>
         <Eyebrow label="Struktur Organisasi" />
         <SectionH2>Bagan Organisasi<br /><em style={{ color:T.redIkat }}>Dinas Perpustakaan & Kearsipan</em></SectionH2>
         <p style={{ fontSize:17, color:T.ink2, lineHeight:1.85, fontWeight:300, maxWidth:640, marginBottom:52 }}>
           Struktur organisasi Dinas Perpustakaan dan Kearsipan Kabupaten Sumba Barat berdasarkan peraturan daerah yang berlaku.
         </p>
-        <div className="sb-fade-up" style={{ display:"flex", justifyContent:"center" }}>
-          <OrgBranch node={STRUKTUR} level={0} />
+        <div className="org-scroll">
+          <div className="org-container">
+            {/* KEPALA */}
+            <OrgCard data={ORG.kepala} color={T.greenDeep} isLeader />
+            <div className="org-line-v" style={{ background:`linear-gradient(to bottom,${T.greenDeep},#cbd5e1)` }} />
+
+            {/* MIDDLE ROW: SEKRETARIS (left) + connector bridge */}
+            <div style={{ width:"100%", display:"flex", justifyContent:"center", position:"relative", height:480 }}>
+              <div style={{ width:3, height:"100%", background:"#cbd5e1", position:"absolute", top:0, left:"50%", transform:"translateX(-50%)" }} />
+              <div style={{ position:"absolute", top:0, left:"50%", width:"35%", height:60, borderTop:"3px solid #cbd5e1", borderLeft:"3px solid #cbd5e1", borderRight:"3px solid #cbd5e1", borderRadius:"24px 24px 0 0", transform:"translateX(-50%)" }} />
+
+              {/* SEKRETARIS + KASUBAG (left side) */}
+              <div style={{ position:"absolute", left:"20%", top:60, transform:"translateX(-50%)" }}>
+                <OrgCard data={ORG.sekretaris} color={T.greenDeep} />
+                <div className="org-line-v" style={{ background:"#cbd5e1", height:36 }} />
+                <OrgCard data={ORG.kasubag} color={T.greenMid} />
+              </div>
+
+              {/* KELOMPOK JABATAN (right side) */}
+              <div style={{ position:"absolute", left:"80%", top:60, transform:"translateX(-50%)", width:220 }}>
+                <div style={{ padding:"24px 20px", background:"rgba(255,255,255,.95)", backdropFilter:"blur(10px)", borderRadius:24, boxShadow:"0 10px 30px rgba(0,0,0,.04)", border:"1px solid #e2e8f0" }}>
+                  <div style={{ fontSize:10, color:"#94a3b8", marginBottom:12, letterSpacing:"0.1em", fontWeight:900, textTransform:"uppercase", textAlign:"center" }}>KELOMPOK JABATAN</div>
+                  <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
+                    <div style={{ padding:"8px 12px", background:`${T.greenMid}10`, borderRadius:12, textAlign:"center", fontSize:12, fontWeight:600, color:T.greenMid }}>FUNGSIONAL</div>
+                    <div style={{ padding:"8px 12px", background:`${T.greenMid}10`, borderRadius:12, textAlign:"center", fontSize:12, fontWeight:600, color:T.greenMid }}>PELAKSANA</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* BIDANG ROW */}
+            <div className="org-line-v" style={{ background:"#cbd5e1", height:80 }} />
+            <div style={{ width:860, position:"relative" }}>
+              <div style={{ position:"absolute", top:0, left:30, right:30, height:3, background:"#cbd5e1" }} />
+              {[30, 310, 590].map(pos => (
+                <div key={pos} style={{ position:"absolute", top:0, left:pos, width:3, height:60, background:"#cbd5e1", marginLeft:-1.5 }} />
+              ))}
+            </div>
+            <div style={{ display:"flex", gap:20, width:860, justifyContent:"center" }}>
+              {ORG.bidang.map((b, i) => <OrgCard key={i} data={b} color={T.greenMid} />)}
+            </div>
+          </div>
         </div>
       </div>
     </section>
