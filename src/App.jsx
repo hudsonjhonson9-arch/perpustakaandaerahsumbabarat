@@ -99,8 +99,12 @@ const GLOBAL_CSS = `
   .sb-service-link:hover { gap:10px; }
 
   .sb-struktur-card { transition: transform .3s ease, box-shadow .3s ease; }
-  .sb-struktur-card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,.08)!important; }
-  .sb-struktur-line { width:2px; height:32px; margin:0 auto; background:#D4A543; }
+  .sb-struktur-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,.08)!important; }
+  .sb-connector-v { width:2px; height:28px; margin:0 auto; background:linear-gradient(to bottom,#D4A543,rgba(212,165,67,.3)); }
+  .sb-connector-h { height:2px; min-width:20px; background:linear-gradient(to right,rgba(212,165,67,.3),#D4A543,rgba(212,165,67,.3)); flex:1; }
+  .sb-connector-v-down { width:2px; height:24px; margin:0 auto; background:linear-gradient(to bottom,rgba(212,165,67,.3),transparent); }
+  .sb-nip { font-size:11px; color:rgba(255,255,255,.45); font-family:'Space Mono',monospace; letter-spacing:.02em; }
+  .sb-nip-dark { font-size:10px; color:#6B6B6B; font-family:'Space Mono',monospace; letter-spacing:.02em; }
 
   .sb-dokumen-card { transition: background .2s, border-color .2s; cursor:pointer; }
   .sb-dokumen-card:hover { background:#F5F5F0!important; border-color:#D4A543!important; }
@@ -123,6 +127,8 @@ const GLOBAL_CSS = `
     .sb-hamburger { display:flex!important; }
     .sb-hero-content { padding:100px 24px 64px!important; }
     .sb-container { padding:0 24px!important; }
+    .sb-org-row { flex-direction:column!important; align-items:center!important; }
+    .sb-org-child { max-width:100%!important; }
   }
   @media (max-width:1024px) {
     .sb-container { padding:0 40px!important; }
@@ -591,68 +597,121 @@ function KoleksiSection() {
 }
 
 // ─── STRUKTUR ORGANISASI ─────────────────────────────────────────────────────
-const STRUKTUR = [
-  {
-    title:"Kepala Perpustakaan\nUmum Daerah",
-    name:"Drs. Umbu Landu, M.Si",
-    role:"Kepala Dinas/Unit",
-    icon:<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={T.gold} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>,
-    children:[
-      {
-        title:"Sub Bagian Tata Usaha",
-        name:"Martha Rambu, S.Sos",
-        role:"Kepala Sub Bagian",
-      },
-      {
-        title:"Seksi Pelayanan\n& Sirkulasi",
-        name:"Yulius Dappa, S.IP",
-        role:"Kepala Seksi",
-      },
-      {
-        title:"Seksi Pengembangan\nKoleksi",
-        name:"Maria Rambu, S.Sos",
-        role:"Kepala Seksi",
-      },
-      {
-        title:"Seksi Teknologi\nInformasi",
-        name:"Emanuel Haba, A.Md",
-        role:"Kepala Seksi",
-      },
-    ],
-  },
-];
+const STRUKTUR = {
+  title:"KEPALA DINAS PERPUSTAKAAN & KEARSIPAN",
+  name:"Herybertus Ndama Nggilik, ST, M.AP",
+  nip:"19780424 200604 1 012",
+  gol:"IV-c",
+  children:[
+    {
+      title:"SEKRETARIS DINAS",
+      name:"Samuel L. Manupele, S.Sos",
+      nip:"19721110 200112 1 006",
+      gol:"IV-b",
+      children:[
+        {
+          title:"KEPALA SUB BAGIAN TATA USAHA",
+          name:"Agustina M. Nola, SE",
+          nip:"19760826 200804 2 001",
+          gol:"III-d",
+        },
+      ],
+    },
+    {
+      title:"KEPALA BIDANG PENGOLAHAN\nLAYANAN PELESTARIAN\nBAHAN PERPUSTAKAAN",
+      name:"Dominggus Bora, SE",
+      nip:"19710630 200903 1 001",
+      gol:"IV-a",
+      children:[],
+    },
+    {
+      title:"KEPALA BIDANG\nPENGELOLAAN KEARSIPAN",
+      name:"Afliana Bela Wawo, S.Sos",
+      nip:"19750803 200112 2 003",
+      gol:"IV-a",
+      children:[],
+    },
+  ],
+};
+
+function OrgCard({ node, level, highlight }) {
+  const isTop = level === 0;
+  const isMid = level === 1;
+  const isEmpty = node.title === "---";
+  return (
+    <div className="sb-struktur-card" style={{
+      background: isTop ? T.greenDeep : T.white,
+      borderRadius:4, padding: isTop ? "28px 40px" : "20px 20px",
+      textAlign:"center", minWidth: isTop ? 420 : 240,
+      border: isTop ? `2px solid ${T.gold}` : `1px solid ${highlight ? T.gold : "rgba(0,0,0,.06)"}`,
+      borderTop: isMid ? `3px solid ${T.gold}` : undefined,
+      boxShadow: isTop ? "0 8px 32px rgba(0,0,0,.12)" : "0 2px 8px rgba(0,0,0,.04)",
+    }}>
+      {!isEmpty && (
+        <div style={{ fontFamily:"'Space Mono',monospace", fontSize:9, letterSpacing:"0.15em", color: isTop ? T.gold : T.greenMid, textTransform:"uppercase", marginBottom:6, whiteSpace:"pre-line" }}>
+          {node.title}
+        </div>
+      )}
+      <div style={{ fontFamily:"'Playfair Display',serif", fontSize: isTop ? 18 : 14, fontWeight:700, color: isTop ? T.white : T.greenDeep, lineHeight:1.3 }}>
+        {isEmpty ? node.name : node.name}
+      </div>
+      {!isEmpty && (
+        <>
+          <div className={isTop ? "sb-nip" : "sb-nip-dark"} style={{ marginTop:6 }}>
+            NIP. {node.nip}
+          </div>
+          <div style={{ display:"inline-block", marginTop:6, padding:"2px 10px", background: isTop ? "rgba(212,165,67,.2)" : T.cream2, borderRadius:2, fontSize:10, fontWeight:600, letterSpacing:"0.05em", color: isTop ? T.goldLight : T.greenMid }}>
+            {node.gol}
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
+function OrgBranch({ node, level }) {
+  const hasChildren = node.children && node.children.length > 0;
+  return (
+    <div style={{ display:"flex", flexDirection:"column", alignItems:"center" }}>
+      <OrgCard node={node} level={level} />
+      {hasChildren && (
+        <>
+          <div className="sb-connector-v" />
+          <div style={{ display:"flex", alignItems:"center", width:"100%", justifyContent:"center" }}>
+            {node.children.map((_, i) => (
+              <div key={i} style={{ flex:1, display:"flex", justifyContent:"center" }}>
+                {i > 0 && <div className="sb-connector-h" />}
+              </div>
+            ))}
+          </div>
+          <div style={{ display:"flex", gap:24, justifyContent:"center", width:"100%", marginTop:0 }}>
+            {node.children.map((child, i) => (
+              <div key={i} style={{ flex:1, maxWidth:300, display:"flex", flexDirection:"column", alignItems:"center" }}>
+                <div style={{ display:"flex", alignItems:"center", width:"100%", justifyContent:"center" }}>
+                  <div className="sb-connector-v" style={{ height:12, background:"linear-gradient(to bottom,rgba(212,165,67,.3),#D4A543)" }} />
+                </div>
+                <OrgBranch node={child} level={level + 1} highlight={level === 0} />
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
 
 function StrukturOrganisasiSection() {
   const ref = useFadeUp();
   return (
-    <section id="struktur" style={{ background:T.cream, padding:"100px 0" }} ref={ref}>
+    <section id="struktur" style={{ background:T.cream, padding:"100px 0", overflow:"hidden" }} ref={ref}>
       <div className="sb-container" style={{ maxWidth:1280, margin:"0 auto", padding:"0 80px" }}>
         <Eyebrow label="Struktur Organisasi" />
-        <SectionH2>Bagan Organisasi<br /><em style={{ color:T.redIkat }}>Perpustakaan Umum Daerah</em></SectionH2>
+        <SectionH2>Bagan Organisasi<br /><em style={{ color:T.redIkat }}>Dinas Perpustakaan & Kearsipan</em></SectionH2>
         <p style={{ fontSize:17, color:T.ink2, lineHeight:1.85, fontWeight:300, maxWidth:640, marginBottom:52 }}>
-          Struktur organisasi Perpustakaan Umum Daerah Kabupaten Sumba Barat sebagai unit kerja pemerintah daerah.
+          Struktur organisasi Dinas Perpustakaan dan Kearsipan Kabupaten Sumba Barat berdasarkan peraturan daerah yang berlaku.
         </p>
-        <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:0 }}>
-          {STRUKTUR.map((top, i) => (
-            <div key={i} className="sb-fade-up" style={{ width:"100%", maxWidth:840 }}>
-              <div className="sb-struktur-card" style={{ background:T.greenDeep, borderRadius:4, padding:"28px 32px", textAlign:"center", border:`1px solid ${T.gold}` }}>
-                <div style={{ width:48, height:48, margin:"0 auto 12px", background:"rgba(212,165,67,.15)", borderRadius:4, display:"flex", alignItems:"center", justifyContent:"center" }}>{top.icon}</div>
-                <h3 style={{ fontFamily:"'Playfair Display',serif", fontSize:18, fontWeight:700, color:T.white, whiteSpace:"pre-line" }}>{top.title}</h3>
-                <div style={{ fontSize:14, fontWeight:600, color:T.goldLight, marginTop:6 }}>{top.name}</div>
-                <div style={{ fontSize:12, color:"rgba(255,255,255,.5)", marginTop:2, letterSpacing:"0.05em" }}>{top.role}</div>
-              </div>
-              <div className="sb-struktur-line" />
-              <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:16, marginTop:0 }}>
-                {top.children.map((child, j) => (
-                  <div key={j} className="sb-struktur-card sb-fade-up" style={{ background:T.white, borderRadius:4, padding:"24px 16px", textAlign:"center", border:"1px solid rgba(0,0,0,.06)", marginTop:0 }}>
-                    <div style={{ fontFamily:"'Playfair Display',serif", fontSize:13, fontWeight:700, color:T.greenDeep, whiteSpace:"pre-line", marginBottom:8 }}>{child.title}</div>
-                    <div style={{ fontSize:13, fontWeight:600, color:T.ink2 }}>{child.name}</div>
-                    <div style={{ fontSize:11, color:T.ink3, marginTop:2 }}>{child.role}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
+        <div className="sb-fade-up" style={{ display:"flex", justifyContent:"center" }}>
+          <OrgBranch node={STRUKTUR} level={0} />
         </div>
       </div>
     </section>
