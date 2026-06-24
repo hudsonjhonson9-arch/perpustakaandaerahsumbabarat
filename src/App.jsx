@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import { Routes, Route } from 'react-router-dom';
 import BeritaKegiatanSection from './BeritaKegiatanSection.jsx';
 import AdminPage from './AdminPage.jsx';
 
@@ -950,6 +949,18 @@ function Footer() {
 export default function App() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [path, setPath] = useState(window.location.pathname);
+
+  useEffect(() => {
+    const handler = () => setPath(window.location.pathname);
+    window.addEventListener("popstate", handler);
+    return () => window.removeEventListener("popstate", handler);
+  }, []);
+
+  const navigate = (to) => {
+    window.history.pushState({}, "", to);
+    setPath(to);
+  };
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 60);
@@ -965,31 +976,28 @@ export default function App() {
     return () => style.remove();
   }, []);
 
+  if (path === "/admin") return <AdminPage />;
+
   return (
-    <Routes>
-      <Route path="/admin" element={<AdminPage />} />
-      <Route path="*" element={
-        <>
-          <Navbar scrolled={scrolled} menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
-          <HeroSection />
-          <IkatDivider />
-          <AboutSection />
-          <StatsSection />
-          <LayananSection />
-          <KoleksiSection />
-          <BeritaKegiatanSection />
-          <StrukturOrganisasiSection />
-          <DokumenPublikSection />
-          {/* Red ikat band */}
-          <div style={{ background:T.redIkat, padding:"20px 0", overflow:"hidden" }}>
-            <IkatMotifBand />
-          </div>
-          <JamSection />
-          <CTASection />
-          <LokasiSection />
-          <Footer />
-        </>
-      } />
-    </Routes>
+    <>
+      <Navbar scrolled={scrolled} menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+      <HeroSection />
+      <IkatDivider />
+      <AboutSection />
+      <StatsSection />
+      <LayananSection />
+      <KoleksiSection />
+      <BeritaKegiatanSection />
+      <StrukturOrganisasiSection />
+      <DokumenPublikSection />
+      {/* Red ikat band */}
+      <div style={{ background:T.redIkat, padding:"20px 0", overflow:"hidden" }}>
+        <IkatMotifBand />
+      </div>
+      <JamSection />
+      <CTASection />
+      <LokasiSection />
+      <Footer />
+    </>
   );
 }
