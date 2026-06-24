@@ -135,6 +135,12 @@ const GLOBAL_CSS = `
     .sb-container { padding:0 24px!important; }
     .sb-org-row { flex-direction:column!important; align-items:center!important; }
     .sb-org-child { max-width:100%!important; }
+    .org-container { width:900px!important; }
+    .org-card { width:200px!important; }
+    .org-card:hover { transform:translateY(-4px) scale(1.01)!important; }
+    .org-header { padding:10px 12px!important; min-height:44px!important; font-size:8px!important; }
+    .org-body { padding:14px 12px!important; gap:6px!important; }
+    .org-avatar { width:44px!important; height:44px!important; font-size:18px!important; border-radius:12px!important; }
   }
   @media (max-width:1024px) {
     .sb-container { padding:0 40px!important; }
@@ -681,14 +687,14 @@ function StrukturOrganisasiSection() {
             </div>
 
             {/* BIDANG ROW */}
-            <div className="org-line-v" style={{ background:"#cbd5e1", height:200 }} />
+            <div className="org-line-v" style={{ background:"#cbd5e1", height:240 }} />
             <div style={{ width:860, position:"relative" }}>
               <div style={{ position:"absolute", top:0, left:190, right:190, height:3, background:"#cbd5e1" }} />
               {[190, 430, 670].map(pos => (
-                <div key={pos} style={{ position:"absolute", top:0, left:pos, width:3, height:60, background:"#cbd5e1", marginLeft:-1.5 }} />
+                <div key={pos} style={{ position:"absolute", top:0, left:pos, width:3, height:50, background:"#cbd5e1", marginLeft:-1.5 }} />
               ))}
             </div>
-            <div style={{ display:"flex", gap:20, width:860, justifyContent:"center" }}>
+            <div style={{ display:"flex", gap:20, width:860, justifyContent:"center", marginTop:24 }}>
               {ORG.bidang.map((b, i) => <OrgCard key={i} data={b} color={T.greenMid} />)}
             </div>
           </div>
