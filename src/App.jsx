@@ -631,6 +631,13 @@ const STRUKTUR = {
       gol:"IV-a",
       children:[],
     },
+    {
+      title:"KEPALA BIDANG PENGEMBANGAN\nPERPUSTAKAAN & PEMBUDAYAAN\nGEMAR MEMBACA",
+      name:"CICILIA FARYDA PAUBUN, SP",
+      nip:"---",
+      gol:"---",
+      children:[],
+    },
   ],
 };
 
