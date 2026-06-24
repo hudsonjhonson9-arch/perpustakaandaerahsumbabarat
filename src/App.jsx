@@ -1,4 +1,7 @@
 import { useState, useEffect, useRef } from "react";
+import { Routes, Route } from 'react-router-dom';
+import BeritaKegiatanSection from './BeritaKegiatanSection.jsx';
+import AdminPage from './AdminPage.jsx';
 
 // ─── DESIGN TOKENS ───────────────────────────────────────────────────────────
 const T = {
@@ -246,6 +249,7 @@ function Navbar({ scrolled, menuOpen, setMenuOpen }) {
     { href: "#tentang", label: "Tentang" },
     { href: "#layanan", label: "Layanan" },
     { href: "#koleksi", label: "Koleksi" },
+    { href: "#berita", label: "Berita" },
     { href: "#struktur", label: "Struktur" },
     { href: "#dokumen", label: "Dokumen" },
     { href: "#jam", label: "Jam Buka" },
@@ -962,24 +966,30 @@ export default function App() {
   }, []);
 
   return (
-    <>
-      <Navbar scrolled={scrolled} menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
-      <HeroSection />
-      <IkatDivider />
-      <AboutSection />
-      <StatsSection />
-      <LayananSection />
-      <KoleksiSection />
-      <StrukturOrganisasiSection />
-      <DokumenPublikSection />
-      {/* Red ikat band */}
-      <div style={{ background:T.redIkat, padding:"20px 0", overflow:"hidden" }}>
-        <IkatMotifBand />
-      </div>
-      <JamSection />
-      <CTASection />
-      <LokasiSection />
-      <Footer />
-    </>
+    <Routes>
+      <Route path="/admin" element={<AdminPage />} />
+      <Route path="*" element={
+        <>
+          <Navbar scrolled={scrolled} menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+          <HeroSection />
+          <IkatDivider />
+          <AboutSection />
+          <StatsSection />
+          <LayananSection />
+          <KoleksiSection />
+          <BeritaKegiatanSection />
+          <StrukturOrganisasiSection />
+          <DokumenPublikSection />
+          {/* Red ikat band */}
+          <div style={{ background:T.redIkat, padding:"20px 0", overflow:"hidden" }}>
+            <IkatMotifBand />
+          </div>
+          <JamSection />
+          <CTASection />
+          <LokasiSection />
+          <Footer />
+        </>
+      } />
+    </Routes>
   );
 }
