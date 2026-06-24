@@ -28,7 +28,7 @@ const ABOUT_PATTERN = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2
 
 // ─── GLOBAL CSS ───────────────────────────────────────────────────────────────
 const GLOBAL_CSS = `
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
@@ -97,6 +97,13 @@ const GLOBAL_CSS = `
 
   .sb-service-link { display:inline-flex; align-items:center; gap:6px; margin-top:20px; font-size:12px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:#1A5C38; text-decoration:none; transition:gap .2s; }
   .sb-service-link:hover { gap:10px; }
+
+  .sb-struktur-card { transition: transform .3s ease, box-shadow .3s ease; }
+  .sb-struktur-card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,.08)!important; }
+  .sb-struktur-line { width:2px; height:32px; margin:0 auto; background:#D4A543; }
+
+  .sb-dokumen-card { transition: background .2s, border-color .2s; cursor:pointer; }
+  .sb-dokumen-card:hover { background:#F5F5F0!important; border-color:#D4A543!important; }
 
   @media (prefers-reduced-motion:reduce) {
     .sb-fade-up { opacity:1; transform:none; transition:none; }
@@ -229,6 +236,8 @@ function Navbar({ scrolled, menuOpen, setMenuOpen }) {
     { href: "#tentang", label: "Tentang" },
     { href: "#layanan", label: "Layanan" },
     { href: "#koleksi", label: "Koleksi" },
+    { href: "#struktur", label: "Struktur" },
+    { href: "#dokumen", label: "Dokumen" },
     { href: "#jam", label: "Jam Buka" },
   ];
   return (
@@ -244,11 +253,10 @@ function Navbar({ scrolled, menuOpen, setMenuOpen }) {
         <div style={{ maxWidth:1280, margin:"0 auto", display:"flex", alignItems:"center", justifyContent:"space-between", height:72 }}>
           {/* Logo */}
           <a href="#" style={{ display:"flex", alignItems:"center", gap:12, textDecoration:"none" }}>
-            <div style={{ width:38, height:38, background:T.gold, borderRadius:4, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
-              <BookIcon stroke={T.greenDeep} size={22} />
-            </div>
+            <img src="/Lambang_Kabupaten_Sumba_Barat.png" alt="Lambang Kabupaten Sumba Barat"
+              style={{ width:38, height:38, objectFit:"contain", flexShrink:0 }} />
             <div>
-              <div style={{ fontFamily:"'Playfair Display',serif", fontWeight:700, fontSize:15, color:T.white, letterSpacing:"0.02em" }}>Perpustakaan Daerah</div>
+              <div style={{ fontFamily:"'Playfair Display',serif", fontWeight:700, fontSize:15, color:T.white, letterSpacing:"0.02em" }}>Perpustakaan Umum Daerah</div>
               <div style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:T.goldLight, letterSpacing:"0.1em", textTransform:"uppercase" }}>Kabupaten Sumba Barat</div>
             </div>
           </a>
@@ -317,7 +325,7 @@ function HeroSection() {
             <br />yang Berdaya
           </h1>
           <p style={{ fontSize:16, color:"rgba(255,255,255,.7)", lineHeight:1.8, maxWidth:480, marginBottom:44, fontWeight:300 }}>
-            Perpustakaan Daerah Kabupaten Sumba Barat hadir sebagai ruang belajar terbuka bagi seluruh masyarakat — dari anak-anak hingga profesional, dari pelajar hingga peneliti.
+            Perpustakaan Umum Daerah Kabupaten Sumba Barat hadir sebagai ruang belajar terbuka bagi seluruh masyarakat — dari anak-anak hingga profesional, dari pelajar hingga peneliti.
           </p>
           <div style={{ display:"flex", gap:16, flexWrap:"wrap" }}>
             <a href="#koleksi" className="sb-btn-primary">Jelajahi Koleksi</a>
@@ -353,7 +361,7 @@ function HeroSection() {
                 "Membaca adalah jembatan antara hari ini dan masa depan Sumba."
               </p>
               <div style={{ fontFamily:"'Space Mono',monospace", fontSize:10, letterSpacing:"0.12em", color:T.gold, textTransform:"uppercase" }}>
-                — Perpustakaan Daerah Kab. Sumba Barat
+                — Perpustakaan Umum Daerah Kab. Sumba Barat
               </div>
             </div>
           </div>
@@ -380,7 +388,7 @@ function AboutSection() {
             <Eyebrow label="Tentang Kami" />
             <SectionH2>Pusat Literasi<br /><em style={{ color:T.redIkat }}>Masyarakat Sumba</em></SectionH2>
             <p style={{ fontSize:17, color:T.ink2, lineHeight:1.85, fontWeight:300, marginBottom:20 }}>
-              Perpustakaan Daerah Kabupaten Sumba Barat adalah institusi pengetahuan milik pemerintah daerah yang berdedikasi untuk meningkatkan budaya literasi di wilayah Sumba Barat.
+              Perpustakaan Umum Daerah Kabupaten Sumba Barat adalah institusi pengetahuan milik pemerintah daerah yang berdedikasi untuk meningkatkan budaya literasi di wilayah Sumba Barat.
             </p>
             <p style={{ fontSize:15, color:T.ink3, lineHeight:1.9, marginBottom:20 }}>
               Berlokasi di Waikabubak, ibu kota Kabupaten Sumba Barat, perpustakaan kami menyediakan koleksi buku, jurnal, dan sumber belajar digital yang dapat diakses oleh seluruh lapisan masyarakat — mulai dari pelajar, mahasiswa, aparatur sipil negara, hingga masyarakat umum.
@@ -582,6 +590,111 @@ function KoleksiSection() {
   );
 }
 
+// ─── STRUKTUR ORGANISASI ─────────────────────────────────────────────────────
+const STRUKTUR = [
+  {
+    title:"Kepala Perpustakaan\nUmum Daerah",
+    name:"Drs. Umbu Landu, M.Si",
+    role:"Kepala Dinas/Unit",
+    icon:<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={T.gold} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>,
+    children:[
+      {
+        title:"Sub Bagian Tata Usaha",
+        name:"Martha Rambu, S.Sos",
+        role:"Kepala Sub Bagian",
+      },
+      {
+        title:"Seksi Pelayanan\n& Sirkulasi",
+        name:"Yulius Dappa, S.IP",
+        role:"Kepala Seksi",
+      },
+      {
+        title:"Seksi Pengembangan\nKoleksi",
+        name:"Maria Rambu, S.Sos",
+        role:"Kepala Seksi",
+      },
+      {
+        title:"Seksi Teknologi\nInformasi",
+        name:"Emanuel Haba, A.Md",
+        role:"Kepala Seksi",
+      },
+    ],
+  },
+];
+
+function StrukturOrganisasiSection() {
+  const ref = useFadeUp();
+  return (
+    <section id="struktur" style={{ background:T.cream, padding:"100px 0" }} ref={ref}>
+      <div className="sb-container" style={{ maxWidth:1280, margin:"0 auto", padding:"0 80px" }}>
+        <Eyebrow label="Struktur Organisasi" />
+        <SectionH2>Bagan Organisasi<br /><em style={{ color:T.redIkat }}>Perpustakaan Umum Daerah</em></SectionH2>
+        <p style={{ fontSize:17, color:T.ink2, lineHeight:1.85, fontWeight:300, maxWidth:640, marginBottom:52 }}>
+          Struktur organisasi Perpustakaan Umum Daerah Kabupaten Sumba Barat sebagai unit kerja pemerintah daerah.
+        </p>
+        <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:0 }}>
+          {STRUKTUR.map((top, i) => (
+            <div key={i} className="sb-fade-up" style={{ width:"100%", maxWidth:840 }}>
+              <div className="sb-struktur-card" style={{ background:T.greenDeep, borderRadius:4, padding:"28px 32px", textAlign:"center", border:`1px solid ${T.gold}` }}>
+                <div style={{ width:48, height:48, margin:"0 auto 12px", background:"rgba(212,165,67,.15)", borderRadius:4, display:"flex", alignItems:"center", justifyContent:"center" }}>{top.icon}</div>
+                <h3 style={{ fontFamily:"'Playfair Display',serif", fontSize:18, fontWeight:700, color:T.white, whiteSpace:"pre-line" }}>{top.title}</h3>
+                <div style={{ fontSize:14, fontWeight:600, color:T.goldLight, marginTop:6 }}>{top.name}</div>
+                <div style={{ fontSize:12, color:"rgba(255,255,255,.5)", marginTop:2, letterSpacing:"0.05em" }}>{top.role}</div>
+              </div>
+              <div className="sb-struktur-line" />
+              <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:16, marginTop:0 }}>
+                {top.children.map((child, j) => (
+                  <div key={j} className="sb-struktur-card sb-fade-up" style={{ background:T.white, borderRadius:4, padding:"24px 16px", textAlign:"center", border:"1px solid rgba(0,0,0,.06)", marginTop:0 }}>
+                    <div style={{ fontFamily:"'Playfair Display',serif", fontSize:13, fontWeight:700, color:T.greenDeep, whiteSpace:"pre-line", marginBottom:8 }}>{child.title}</div>
+                    <div style={{ fontSize:13, fontWeight:600, color:T.ink2 }}>{child.name}</div>
+                    <div style={{ fontSize:11, color:T.ink3, marginTop:2 }}>{child.role}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── DOKUMEN PUBLIK ────────────────────────────────────────────────────────────
+const DOKUMEN = [
+  { icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={T.greenMid} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>, title:"Profil Perpustakaan", desc:"Dokumen profil dan gambaran umum Perpustakaan Umum Daerah Kabupaten Sumba Barat." },
+  { icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={T.greenMid} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>, title:"Standar Pelayanan Minimal", desc:"SPM Perpustakaan Umum Daerah sesuai regulasi dan standar nasional perpustakaan." },
+  { icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={T.greenMid} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>, title:"Peraturan Daerah", desc:"Perda tentang penyelenggaraan perpustakaan daerah dan budaya literasi." },
+  { icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={T.greenMid} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M16 13H8M16 17H8M10 9H8"/></svg>, title:"Laporan Kinerja Tahunan", desc:"Laporan capaian kinerja dan realisasi program kerja tahunan perpustakaan." },
+  { icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={T.greenMid} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>, title:"Rencana Strategis (Renstra)", desc:"Rencana strategis pengembangan perpustakaan daerah untuk jangka menengah dan panjang." },
+  { icon:<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={T.greenMid} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>, title:"Informasi Pengadaan", desc:"Informasi pengadaan barang dan jasa serta laporan pengelolaan anggaran." },
+];
+
+function DokumenPublikSection() {
+  const ref = useFadeUp();
+  return (
+    <section id="dokumen" style={{ background:T.cream2, padding:"100px 0" }} ref={ref}>
+      <div className="sb-container" style={{ maxWidth:1280, margin:"0 auto", padding:"0 80px" }}>
+        <Eyebrow label="Dokumen Publik" />
+        <SectionH2>Informasi &<br /><em style={{ color:T.redIkat }}>Dokumen Publik</em></SectionH2>
+        <p style={{ fontSize:17, color:T.ink2, lineHeight:1.85, fontWeight:300, maxWidth:640, marginBottom:52 }}>
+          Dokumen dan informasi publik yang dapat diakses oleh masyarakat sesuai dengan Undang-Undang Keterbukaan Informasi Publik.
+        </p>
+        <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:20 }}>
+          {DOKUMEN.map((d, i) => (
+            <div key={i} className="sb-dokumen-card sb-fade-up" style={{ background:T.white, borderRadius:4, padding:"28px 24px", border:"1px solid rgba(0,0,0,.06)", display:"flex", gap:16, alignItems:"flex-start" }}>
+              <div style={{ width:44, height:44, background:T.cream2, borderRadius:4, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>{d.icon}</div>
+              <div>
+                <div style={{ fontWeight:600, fontSize:14, color:T.greenDeep, marginBottom:4 }}>{d.title}</div>
+                <div style={{ fontSize:13, color:T.ink3, lineHeight:1.6 }}>{d.desc}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ─── JAM LAYANAN ──────────────────────────────────────────────────────────────
 const JAM_DATA = [
   { day:"Senin",  time:"07.30 – 15.30", status:"open" },
@@ -589,7 +702,7 @@ const JAM_DATA = [
   { day:"Rabu",   time:"07.30 – 15.30", status:"open" },
   { day:"Kamis",  time:"07.30 – 15.30", status:"open" },
   { day:"Jumat",  time:"07.30 – 11.00", status:"ishoma" },
-  { day:"Sabtu",  time:"08.00 – 13.00", status:"open" },
+  { day:"Sabtu",  time:"07.00 – 18.00", status:"open" },
   { day:"Minggu", time:null,             status:"closed" },
 ];
 
@@ -729,7 +842,7 @@ function LokasiSection() {
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3959.2!2d119.4!3d-9.66!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2c4b1e2955c50a65%3A0x4087e5e531d72b7e!2sPerpustakaan%20Daerah%20Kabupaten%20Sumba%20Barat!5e0!3m2!1sid!2sid!4v1234567890"
               style={{ display:"block", width:"100%", height:380, border:"none", filter:"grayscale(20%) contrast(1.05)" }}
               allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"
-              title="Lokasi Perpustakaan Daerah Kabupaten Sumba Barat"
+              title="Lokasi Perpustakaan Umum Daerah Kabupaten Sumba Barat"
             />
           </div>
         </div>
@@ -741,9 +854,9 @@ function LokasiSection() {
 // ─── FOOTER ───────────────────────────────────────────────────────────────────
 function Footer() {
   const cols = [
-    { title:"Navigasi", links:[["#tentang","Tentang Kami"],["#layanan","Layanan"],["#koleksi","Koleksi"],["#jam","Jam Operasional"],["#lokasi","Lokasi"]] },
+    { title:"Navigasi", links:[["#tentang","Tentang Kami"],["#layanan","Layanan"],["#koleksi","Koleksi"],["#struktur","Struktur Organisasi"],["#dokumen","Dokumen Publik"],["#jam","Jam Operasional"],["#lokasi","Lokasi"]] },
     { title:"Layanan",  links:[["#","Peminjaman Buku"],["#","Ruang Baca"],["#","Akses Internet"],["#","Program Anak"],["#","Referensi"]] },
-    { title:"Informasi",links:[["#","Cara Daftar Anggota"],["#","Aturan Peminjaman"],["#","Katalog Online"],["#","Kegiatan & Acara"],["#","Hubungi Kami"]] },
+    { title:"Informasi",links:[["#tentang","Tentang Kami"],["#struktur","Struktur Organisasi"],["#dokumen","Dokumen Publik"],["#","Katalog Online"],["#lokasi","Hubungi Kami"]] },
   ];
   return (
     <footer style={{ background:"#070F09", padding:"64px 0 0", position:"relative", overflow:"hidden" }}>
@@ -751,7 +864,7 @@ function Footer() {
       <div className="sb-container" style={{ maxWidth:1280, margin:"0 auto", padding:"0 80px", position:"relative" }}>
         <div className="sb-footer-grid" style={{ display:"grid", gridTemplateColumns:"2fr 1fr 1fr 1fr", gap:60, paddingBottom:52 }}>
           <div>
-            <div style={{ fontFamily:"'Playfair Display',serif", fontSize:18, fontWeight:700, color:T.white, marginBottom:4 }}>Perpustakaan Daerah</div>
+            <div style={{ fontFamily:"'Playfair Display',serif", fontSize:18, fontWeight:700, color:T.white, marginBottom:4 }}>Perpustakaan Umum Daerah</div>
             <div style={{ fontFamily:"'Space Mono',monospace", fontSize:9, letterSpacing:"0.15em", color:T.gold, textTransform:"uppercase" }}>Kabupaten Sumba Barat</div>
             <p style={{ fontSize:13, color:"rgba(255,255,255,.4)", lineHeight:1.8, marginTop:20, maxWidth:280 }}>
               Melayani masyarakat Sumba Barat dengan koleksi buku, layanan literasi, dan program pendidikan yang inklusif dan berkelanjutan.
@@ -782,7 +895,7 @@ function Footer() {
         </div>
         <div style={{ borderTop:"1px solid rgba(255,255,255,.07)", padding:"24px 0", display:"flex", justifyContent:"space-between", alignItems:"center", flexWrap:"wrap", gap:12 }}>
           <div style={{ fontSize:12, color:"rgba(255,255,255,.25)" }}>
-            © 2024 Perpustakaan Daerah Kabupaten Sumba Barat · Pemerintah Kabupaten Sumba Barat
+            © 2024 Perpustakaan Umum Daerah Kabupaten Sumba Barat · Pemerintah Kabupaten Sumba Barat
           </div>
           <div style={{ display:"flex", gap:8, alignItems:"center" }}>
             {[1,.6,1].map((op, i) => <div key={i} style={{ width:8, height:8, background:T.gold, transform:"rotate(45deg)", opacity:op * .4 }} />)}
@@ -821,6 +934,8 @@ export default function App() {
       <StatsSection />
       <LayananSection />
       <KoleksiSection />
+      <StrukturOrganisasiSection />
+      <DokumenPublikSection />
       {/* Red ikat band */}
       <div style={{ background:T.redIkat, padding:"20px 0", overflow:"hidden" }}>
         <IkatMotifBand />
