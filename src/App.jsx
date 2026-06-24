@@ -656,7 +656,7 @@ function StrukturOrganisasiSection() {
             {/* MIDDLE ROW: SEKRETARIS (left) + connector bridge */}
             <div style={{ width:"100%", display:"flex", justifyContent:"center", position:"relative", height:480 }}>
               <div style={{ width:3, height:"100%", background:"#cbd5e1", position:"absolute", top:0, left:"50%", transform:"translateX(-50%)" }} />
-              <div style={{ position:"absolute", top:0, left:"50%", width:"35%", height:60, borderTop:"3px solid #cbd5e1", borderLeft:"3px solid #cbd5e1", borderRight:"3px solid #cbd5e1", borderRadius:"24px 24px 0 0", transform:"translateX(-50%)" }} />
+              <div style={{ position:"absolute", top:0, left:"50%", width:"60%", height:60, borderTop:"3px solid #cbd5e1", borderLeft:"3px solid #cbd5e1", borderRight:"3px solid #cbd5e1", borderRadius:"24px 24px 0 0", transform:"translateX(-50%)" }} />
 
               {/* SEKRETARIS + KASUBAG (left side) */}
               <div style={{ position:"absolute", left:"20%", top:60, transform:"translateX(-50%)" }}>
@@ -680,8 +680,8 @@ function StrukturOrganisasiSection() {
             {/* BIDANG ROW */}
             <div className="org-line-v" style={{ background:"#cbd5e1", height:80 }} />
             <div style={{ width:860, position:"relative" }}>
-              <div style={{ position:"absolute", top:0, left:30, right:30, height:3, background:"#cbd5e1" }} />
-              {[30, 310, 590].map(pos => (
+              <div style={{ position:"absolute", top:0, left:190, right:190, height:3, background:"#cbd5e1" }} />
+              {[190, 430, 670].map(pos => (
                 <div key={pos} style={{ position:"absolute", top:0, left:pos, width:3, height:60, background:"#cbd5e1", marginLeft:-1.5 }} />
               ))}
             </div>
