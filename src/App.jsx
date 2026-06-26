@@ -689,14 +689,14 @@ function StrukturOrganisasiSection() {
             </div>
 
             {/* BIDANG ROW */}
-            <div className="org-line-v" style={{ background:"#cbd5e1", height:140 }} />
+            <div className="org-line-v" style={{ background:"#cbd5e1", height:200 }} />
             <div style={{ width:860, position:"relative" }}>
               <div style={{ position:"absolute", top:0, left:190, right:190, height:3, background:"#cbd5e1" }} />
               {[190, 430, 670].map(pos => (
                 <div key={pos} style={{ position:"absolute", top:0, left:pos, width:3, height:50, background:"#cbd5e1", marginLeft:-1.5 }} />
               ))}
             </div>
-            <div style={{ display:"flex", gap:20, width:860, justifyContent:"center", marginTop:30 }}>
+            <div style={{ display:"flex", gap:20, width:860, justifyContent:"center", marginTop:40 }}>
               {ORG.bidang.map((b, i) => <OrgCard key={i} data={b} color={T.greenMid} />)}
             </div>
           </div>
