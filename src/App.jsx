@@ -133,17 +133,16 @@ const GLOBAL_CSS = `
     .sb-hamburger { display:flex!important; }
     .sb-hero-content { padding:100px 24px 64px!important; }
     .sb-container { padding:0 20px!important; }
-    section { padding:60px 0!important; }
     .sb-berita-grid { grid-template-columns:1fr!important; }
     .sb-dokumen-grid { grid-template-columns:1fr!important; }
     .org-container { width:700px!important; }
     .org-card { width:180px!important; }
-    .org-card:hover { transform:translateY(-4px) scale(1.01)!important; }
-    .org-header { padding:8px 10px!important; min-height:38px!important; }
-    .org-header div { font-size:7px!important; }
+    .org-card:hover { transform:none!important; }
+    .org-header { padding:8px 10px!important; min-height:36px!important; }
+    .org-header > div { font-size:7px!important; }
     .org-body { padding:12px 10px!important; gap:4px!important; }
+    .org-body > div > div { font-size:11px!important; }
     .org-avatar { width:36px!important; height:36px!important; font-size:14px!important; border-radius:10px!important; }
-    .org-body div:has(+div) { font-size:11px!important; }
   }
   @media (max-width:1024px) {
     .sb-container { padding:0 32px!important; }
