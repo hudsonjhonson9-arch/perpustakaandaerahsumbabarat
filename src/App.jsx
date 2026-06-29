@@ -277,7 +277,7 @@ function Navbar({ scrolled, menuOpen, setMenuOpen }) {
             <img src="/Lambang_Kabupaten_Sumba_Barat.png" alt="Lambang Kabupaten Sumba Barat"
               style={{ width:38, height:38, objectFit:"contain", flexShrink:0 }} />
             <div>
-              <div style={{ fontFamily:"'Playfair Display',serif", fontWeight:700, fontSize:15, color:T.white, letterSpacing:"0.02em" }}>Perpustakaan Umum Daerah</div>
+              <div style={{ fontFamily:"'Playfair Display',serif", fontWeight:700, fontSize:15, color:T.white, letterSpacing:"0.02em" }}>Dinas Perpustakaan dan Kearsipan</div>
               <div style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:T.goldLight, letterSpacing:"0.1em", textTransform:"uppercase" }}>Kabupaten Sumba Barat</div>
             </div>
           </a>
